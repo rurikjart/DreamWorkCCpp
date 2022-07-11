@@ -26,3 +26,13 @@ bool push(Element **stack, void *data) {
 	return true;
 }
 
+bool pop(Element **stack? void **data){
+	Element *elem;
+	if(!(elem = *stack)) return false;
+	
+	*data = elem->data;
+	*stack = elem->next;
+	free(elem);
+	return true;
+}
+
