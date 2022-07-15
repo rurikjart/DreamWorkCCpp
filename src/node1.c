@@ -6,17 +6,9 @@ typedef struct node {
     struct node * next;
 } node_t;
 
-/*void print_list(node_t * head) {
+void print_list(node_t * head) {
+
     node_t * current = head;
-
-    while (current != NULL) {
-        printf("%d\n", current->val);
-        current = current->next;
-    }
-}*/
-
-void print_list(node_t *head){
-	 node_t * current = head;
 
     while (current != NULL) {
         printf("Value: %d\n", current->val);
@@ -49,8 +41,73 @@ void push_start(node_t ** head, int val) {
     *head = new_node;
 }
 
+int pop(node_t ** head) {
 
+    int retval = -1;
+    node_t * next_node = NULL;
 
+    if (*head == NULL) {
+        return -1;
+    }
+
+    next_node = (*head)->next;
+    retval = (*head)->val;
+    free(*head);
+    *head = next_node;
+
+    return retval;
+}
+
+int remove_last(node_t * head) {
+
+    int retval = 0;
+
+    /* if there is only one item in the list, remove it */
+    if (head->next == NULL) {
+        retval = head->val;
+        free(head);
+        return retval;
+    }
+
+    /* get to the last node in the list */
+    node_t * current = head;
+    while (current->next->next != NULL) {
+        current = current->next;
+    }
+
+    /* now current points to the last item of the list, so let's remove current->next */
+    retval = current->next->val;
+    free(current->next);
+    current->next = NULL;
+    return retval;
+}
+
+int remove_by_index(node_t ** head, int n) {
+
+    int i = 0;
+    int retval = -1;
+
+    node_t * current = *head;
+    node_t * temp_node = NULL;
+
+    if (n == 0) {
+        return pop(head);
+    }
+
+    for (int i = 0; i < n-1; i++) {
+        if (current->next == NULL) {
+            return -1;
+        }
+        current = current->next;
+    }
+
+    temp_node = current->next;
+    retval = temp_node->val;
+    current->next = temp_node->next;
+    free(temp_node);
+
+    return retval;
+}
 
 int main() {
 
@@ -70,24 +127,39 @@ int main() {
     head->next->next->next->val = 4;
     head->next->next->next->next = NULL;
 
-	//print current list
+    // print current list
     print_list(head);
-	printf("\nList finished, adding new value 5...\n\n");
+    printf("\nList finished, adding new value 5...\n\n");
+    
+    // add "5" to the end
+    push(head, 5);
 
-	//add "5" to the end
-	push(head, 5);
-	
-	//print updated list
-	print_list(head);
-	
-	// add 0 to start
-    push_start(&head, 0);
+    // print updated list
+    print_list(head);
+    printf("\nList finished, adding new value to begin of the list...\n\n");
+
+    // add 0 to start
+    push_start(&head, 0);    
 
     // print updated list
     print_list(head);
 
-    return 0;
+    // pop 1st element
+    printf("\nRemoving 1th element...\n\n");
+    pop(&head);
 
-	
-    
+    // print updated list
+    print_list(head); 
+
+    printf("\nRemoving last item...\n\n");
+    remove_last(head);
+
+    print_list(head);
+
+    printf("\nRemoving item with index 2...\n\n");
+    remove_by_index(&head, 2);
+
+    print_list(head);
+
+    return 0;
 }
