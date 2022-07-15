@@ -39,6 +39,16 @@ void push(node_t * head, int val) {
     current->next->next = NULL;
 }
 
+void push_start(node_t ** head, int val) {
+
+    node_t * new_node;
+    new_node = malloc(sizeof(node_t));
+
+    new_node->val = val;
+    new_node->next = *head;
+    *head = new_node;
+}
+
 
 
 
