@@ -72,14 +72,22 @@ int main() {
 
 	//print current list
     print_list(head);
-	 printf("\nList finished, adding new value 5...\n\n");
+	printf("\nList finished, adding new value 5...\n\n");
 
 	//add "5" to the end
 	push(head, 5);
 	
 	//print updated list
 	print_list(head);
+	
+	// add 0 to start
+    push_start(&head, 0);
+
+    // print updated list
+    print_list(head);
+
+    return 0;
 
 	
-    return 0;
+    
 }
