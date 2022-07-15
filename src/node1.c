@@ -25,6 +25,23 @@ void print_list(node_t *head){
     }
 }
 
+void push(node_t * head, int val) {
+
+    node_t * current = head;
+
+    while (current->next != NULL) {
+        current = current->next;
+    }
+
+    /* now we can add a new variable */
+    current->next = malloc(sizeof(node_t));
+    current->next->val = val;
+    current->next->next = NULL;
+}
+
+
+
+
 int main() {
 
     node_t * head = NULL;
@@ -43,7 +60,16 @@ int main() {
     head->next->next->next->val = 4;
     head->next->next->next->next = NULL;
 
+	//print current list
     print_list(head);
+	 printf("\nList finished, adding new value 5...\n\n");
 
+	//add "5" to the end
+	push(head, 5);
+	
+	//print updated list
+	print_list(head);
+
+	
     return 0;
 }
