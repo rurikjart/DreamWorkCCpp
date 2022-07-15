@@ -6,11 +6,21 @@ typedef struct node {
     struct node * next;
 } node_t;
 
-void print_list(node_t * head) {
+/*void print_list(node_t * head) {
     node_t * current = head;
 
     while (current != NULL) {
         printf("%d\n", current->val);
+        current = current->next;
+    }
+}*/
+
+void print_list(node_t *head){
+	 node_t * current = head;
+
+    while (current != NULL) {
+        printf("Value: %d\n", current->val);
+        printf("Address: %p\n", (void *)current->next);
         current = current->next;
     }
 }
